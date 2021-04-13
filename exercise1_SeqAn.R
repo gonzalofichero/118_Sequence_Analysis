@@ -67,4 +67,36 @@ data2SPS<-seqformat( data2,
                      from="STS", 
                      to="SPS")
 
+#vector for the state labels
+seqlab <-c("Single, childless", "Single, child b/separat.", 
+           "Single, child a/separat.", "Union, childless", 
+           "Union, child b/separat.", "Union, child a/separat.")
+
+#vector of short state names (default would be alphabet labels)
+sllist <- c("SNP","SBP","SAP","UNP", "UBP", "UAP")
+
+
+#################################################
+###  Generate sequence object
+seqObj2 <- seqdef(data2, 
+                 var=2:61,  
+                 alphabet=c(1:6),
+                 cpal=color1, 
+                 states=sllist, 
+                 labels=seqlab)
+
+### Retrieve information from sequence object
+summary(seqObj2)
+names(seqObj2)
+
+
+#################################################
+### Printed sequence representations and summaries
+#display the first five sequences, and sequence elements 1-25 (STS format - default)
+print(seqObj[1:10, 1:25], format ="STS")
+#display the first five sequences, and sequence elements 1-25 (SPS format)
+print(seqObj[1:10, 1:25], format ="SPS")
+
+
+
 
