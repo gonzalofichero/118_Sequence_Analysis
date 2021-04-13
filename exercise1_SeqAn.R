@@ -67,6 +67,9 @@ data2SPS<-seqformat( data2,
                      from="STS", 
                      to="SPS")
 
+# X-axis for exercise
+xtlab <- seq(1,60, by=1)
+
 #vector for the state labels
 seqlab <-c("Single, childless", "Single, child b/separat.", 
            "Single, child a/separat.", "Union, childless", 
@@ -91,11 +94,16 @@ names(seqObj2)
 
 
 #################################################
-### Printed sequence representations and summaries
-#display the first five sequences, and sequence elements 1-25 (STS format - default)
-print(seqObj[1:10, 1:25], format ="STS")
-#display the first five sequences, and sequence elements 1-25 (SPS format)
-print(seqObj[1:10, 1:25], format ="SPS")
+### 3) Display (print) the first 10 sequences in extended and compact form
+#display the first ten sequences, and sequence elements 1-60 (STS format - default)
+print(seqObj2[1:10, 1:60], format ="STS")
+#display the first five sequences, and sequence elements 1-60 (SPS format)
+print(seqObj2[1:10, 1:60], format ="SPS")
+
+
+
+# 4) Plot a full representation of sequences, and order them from the first state
+seqIplot(seqObj2, with.legend="right", main= "All sequences", xtlab=xtlab, xlab="month", ylab=NA, yaxis=FALSE, sortv="from.start")
 
 
 
