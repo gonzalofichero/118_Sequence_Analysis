@@ -110,3 +110,27 @@ seqIplot(seqObj2, with.legend="right", main= "All sequences", xtlab=xtlab, xlab=
 seqfplot(seqObj2, idxs = 1:5, with.legend="right", main="5 most frequent sequences", xtlab=xtlab, xlab="month", ylab=NA, yaxis=TRUE)
 
 
+# 6) Create a state distribution plot for each birthcohort (BIRTHCOH)
+# What are the cross-cohort differences in the distribution of states overtime? 
+seqdplot(seqObj2, group=data2$BIRTHCOH, with.legend=FALSE, main= "State distribution by Cohort", use.layout=FALSE, border=NA,xtlab=xtlab, ylab=NA, xlab="month")
+
+
+# 7) What are the most frequent states one and five years after break-up?
+# Use a modal state plot for illustration.
+seqmsplot(seqObj2, with.legend=FALSE, main="Modal states", xtlab=xtlab, ylab=NA, xlab="month")
+
+
+# 8) Assess the cross-sectional state diversity plotting a measure of entropy
+# At what time after separation is the cross-sectional diversity of the states at its highest?
+seqHtplot(seqObj2, with.legend=FALSE, main= "Transversal entropies", xtlab=xtlab, ylab=NA, xlab="month") 
+
+
+# 9) Display side by side in a same plot area the mean times spent 
+# in each of the states and the sequence of modal states.
+par(mfrow = c(1, 2))
+seqmtplot(seqObj2, with.legend=FALSE, main= "Mean duration in state", ylab=NA, ylim=c(0,25), yaxis=F)
+seqmsplot(seqObj2, with.legend=FALSE, main="Modal states", xtlab=xtlab, ylab=NA, xlab="month")
+dev.off()
+
+
+
