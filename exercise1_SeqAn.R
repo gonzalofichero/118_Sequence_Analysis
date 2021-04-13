@@ -106,5 +106,7 @@ print(seqObj2[1:10, 1:60], format ="SPS")
 seqIplot(seqObj2, with.legend="right", main= "All sequences", xtlab=xtlab, xlab="month", ylab=NA, yaxis=FALSE, sortv="from.start")
 
 
+# 5) Plot the 5 most frequent sequences. Comment the plot.
+seqfplot(seqObj2, idxs = 1:5, with.legend="right", main="5 most frequent sequences", xtlab=xtlab, xlab="month", ylab=NA, yaxis=TRUE)
 
 
