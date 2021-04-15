@@ -112,3 +112,59 @@ Matrix.LCS <- seqdist(seqObj2,method="LCS")
 
 # Comparing: 
 Matrix.OM.Const - Matrix.LCS
+
+
+# 6) Define a substitution cost matrix reflecting what (according to your prior knowledge)
+# are the distances between two states (i.e. customize state-dependent substitution costs)
+
+
+#OM with customized state-dependent subcosts 
+submatrix <- matrix(c( 0,6,2,4,2,4,
+                       6,0,6,4,6,4,
+                       2,6,0,2,2,3,
+                       4,4,2,0,4,2,
+                       2,6,2,4,0,2,
+                       4,4,3,2,2,0), nrow = 6, ncol = 6, byrow = TRUE)
+
+
+# 7) Compute the OM dissimilarity matrix using the previously derived substitution
+# Set the indel cost as half the maximum substitution cost.
+
+Matrix.OM.State.dep <- seqdist(seqObj2,method="OM", indel=3, sm=submatrix)
+
+
+# 8)  From the previously computed OM dissimilarity matrix, create a 
+# hierarchical cluster tree object with Ward method. Display the hierarchical tree
+
+ward.OM <- hclust(as.dist(Matrix.OM.State.dep), method = "ward.D2")
+
+plot(ward.OM)
+
+
+# 9) Calculate appropriate cluster cut-off criteria. 
+# Assess what is an empirically optimal cluster solution
+
+### Generate an object with 1-10 cluster solutions for each prior anal
+wardrange.OM <-as.clustrange(ward.OM, diss=Matrix.OM.State.dep, ncluster=10)
+summary(wardrange.OM, max.rank=3)
+plot(wardrange.OM, stat=c("ASW", "HGSD", "PBC"), norm="zscore")
+
+# 10) Select the six-cluster solution from the Ward analysis, 
+# Check cluster consistency, and label the clusters by looking at the full sequence index plots 
+# (or the relative frequency version) by cluster.
+
+### store cluster solutions with best empirical fits
+wardrange.OM.6 <- cutree(ward.OM , k=6)
+
+# OM 6-cluster solution
+silh.OM.6 <- silhouette(wardrange.OM.6, dmatrix = Matrix.OM.State.dep)
+summary(silh.OM.6)
+
+# USE WesAnderson palette!!!
+plot(silh.OM.6, main= "Silhouette - OM 6 cluster", col=c("#E2E2E2", "#D3D3D3" ,"#B8B8B8", "#969696", "#707070", "#E2E2E2"), border=NA)
+
+
+# OM 6-cluster solution
+seqIplot(seqObj, group = wardrange.OM.6,use.layout=FALSE, border=NA,xtlab=xtlab, space=0,yaxis=FALSE)
+
+
